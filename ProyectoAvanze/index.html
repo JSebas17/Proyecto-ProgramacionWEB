@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Ayni - Red de Empleabilidad</title>
+
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+    <header class="encabezado">
+
+        <div class="logo">
+            <div class="logo-icono">✚</div>
+
+            <div>
+                <h1>Ayni</h1>
+                <p>Red de Empleabilidad para Trabajadores Independientes</p>
+            </div>
+        </div>
+
+        <div class="estadisticas">
+            <div>
+                <strong>80%</strong>
+                <span>informalidad<br>laboral en Cusco</span>
+            </div>
+
+            <div>
+                <strong>✓</strong>
+                <span>identidad<br>verificada</span>
+            </div>
+
+            <div>
+                <strong>★</strong>
+                <span>calificación<br>mutua</span>
+            </div>
+        </div>
+
+    </header>
+
+
+    <nav class="menu">
+
+        <a href="#" class="activo">Buscar trabajo</a>
+        <a href="#">Ofrecer mi servicio</a>
+
+        <div class="menu-derecha">
+            <a href="#">Ingresar</a>
+            <a href="#" class="registrarse">Registrarme</a>
+        </div>
+
+    </nav>
+
+
+    <main>
+
+        <section class="busqueda">
+
+            <h2>¿Qué trabajo necesitas en tu casa o negocio?</h2>
+
+            <p>
+                Elige un oficio, ve quién está verificado y contáctalo directo.
+            </p>
+
+            <div class="formulario-busqueda">
+
+                <input
+                    type="text"
+                    id="buscarOficio"
+                    placeholder="Ej. arreglar un tablero"
+                >
+
+                <select id="distrito">
+                    <option value="Todos">Todos los distritos</option>
+                    <option value="San Sebastián">San Sebastián</option>
+                    <option value="Cusco">Cusco</option>
+                    <option value="Santiago">Santiago</option>
+                    <option value="San Jerónimo">San Jerónimo</option>
+                </select>
+
+                <button id="btnBuscar">Buscar</button>
+
+            </div>
+
+        </section>
+
+
+        <section class="categorias">
+
+            <button data-oficio="Electricista">
+                ⚡
+                <span>Electricista</span>
+            </button>
+
+            <button data-oficio="Pintura">
+                🎨
+                <span>Pintura</span>
+            </button>
+
+            <button data-oficio="Gasfitería">
+                🔧
+                <span>Gasfitería</span>
+            </button>
+
+            <button data-oficio="Carpintería">
+                🪚
+                <span>Carpintería</span>
+            </button>
+
+            <button data-oficio="Hotelería">
+                🏨
+                <span>Hotelería</span>
+            </button>
+
+            <button data-oficio="Limpieza">
+                🧹
+                <span>Limpieza</span>
+            </button>
+
+        </section>
+
+
+        <section class="filtros">
+
+            <button id="soloVerificados" class="filtro activo-filtro">
+                ✓ Solo verificados
+            </button>
+
+            <button>★ 4 o más</button>
+
+            <button>Mejor calificados</button>
+
+            <span id="cantidadResultados">
+                6 resultados
+            </span>
+
+        </section>
+
+
+        <section id="listaTrabajadores" class="trabajadores">
+
+            <article class="tarjeta" data-oficio="Pintura"
+                data-distrito="San Sebastián" data-verificado="true">
+
+                <div class="foto">RQ</div>
+
+                <h3>Rosa Quispe H.</h3>
+
+                <p>Pintora - San Sebastián</p>
+
+                <span class="verificado">✓ Identidad verificada</span>
+
+                <p>★ 4.9 (18)</p>
+
+                <strong>Desde S/ 50</strong>
+
+                <div class="acciones">
+                    <button>Ver perfil</button>
+
+                    <button class="whatsapp"
+                        onclick="contactar('Rosa Quispe H.')">
+                        WhatsApp
+                    </button>
+                </div>
+
+            </article>
+
+
+            <article class="tarjeta" data-oficio="Electricista"
+                data-distrito="San Sebastián" data-verificado="true">
+
+                <div class="foto">JM</div>
+
+                <h3>Juan C. Mamani</h3>
+
+                <p>Electricista - San Sebastián</p>
+
+                <span class="verificado">✓ Identidad verificada</span>
+
+                <p>★ 4.8 (23)</p>
+
+                <strong>Desde S/ 60</strong>
+
+                <div class="acciones">
+                    <button>Ver perfil</button>
+
+                    <button class="whatsapp"
+                        onclick="contactar('Juan C. Mamani')">
+                        WhatsApp
+                    </button>
+                </div>
+
+            </article>
+
+
+            <article class="tarjeta" data-oficio="Hotelería"
+                data-distrito="Santiago" data-verificado="true">
+
+                <div class="foto">MP</div>
+
+                <h3>Marco Paredes</h3>
+
+                <p>Administrador de hostal</p>
+
+                <span class="verificado">✓ Identidad verificada</span>
+
+                <p>★ 4.7 (9)</p>
+
+                <strong>Desde S/ 50</strong>
+
+                <div class="acciones">
+                    <button>Ver perfil</button>
+
+                    <button class="whatsapp"
+                        onclick="contactar('Marco Paredes')">
+                        WhatsApp
+                    </button>
+                </div>
+
+            </article>
+
+
+            <article class="tarjeta" data-oficio="Electricista"
+                data-distrito="San Sebastián" data-verificado="true">
+
+                <div class="foto">LC</div>
+
+                <h3>Luis Condori</h3>
+
+                <p>Electricista - San Sebastián</p>
+
+                <span class="verificado">✓ Identidad verificada</span>
+
+                <p>★ 4.6 (14)</p>
+
+                <strong>Desde S/ 40</strong>
+
+                <div class="acciones">
+                    <button>Ver perfil</button>
+
+                    <button class="whatsapp"
+                        onclick="contactar('Luis Condori')">
+                        WhatsApp
+                    </button>
+                </div>
+
+            </article>
+
+
+            <article class="tarjeta" data-oficio="Pintura"
+                data-distrito="San Jerónimo" data-verificado="true">
+
+                <div class="foto">EH</div>
+
+                <h3>Elena Huamán</h3>
+
+                <p>Acabados del hogar</p>
+
+                <span class="verificado">✓ Identidad verificada</span>
+
+                <p>★ 4.5 (7)</p>
+
+                <strong>Desde S/ 45</strong>
+
+                <div class="acciones">
+                    <button>Ver perfil</button>
+
+                    <button class="whatsapp"
+                        onclick="contactar('Elena Huamán')">
+                        WhatsApp
+                    </button>
+                </div>
+
+            </article>
+
+
+            <article class="tarjeta" data-oficio="Electricista"
+                data-distrito="Cusco" data-verificado="true">
+
+                <div class="foto">WA</div>
+
+                <h3>Walter Ayma</h3>
+
+                <p>Electricista - Cusco</p>
+
+                <span class="verificado">✓ Identidad verificada</span>
+
+                <p>★ 4.4 (11)</p>
+
+                <strong>Desde S/ 55</strong>
+
+                <div class="acciones">
+                    <button>Ver perfil</button>
+
+                    <button class="whatsapp"
+                        onclick="contactar('Walter Ayma')">
+                        WhatsApp
+                    </button>
+                </div>
+
+            </article>
+
+        </section>
+
+
+        <section class="pasos">
+
+            <div>
+                <strong>1</strong>
+                <p><b>Busca</b><br>Por oficio y distrito</p>
+            </div>
+
+            <div>
+                <strong>2</strong>
+                <p><b>Revisa</b><br>Identidad verificada y reseñas</p>
+            </div>
+
+            <div>
+                <strong>3</strong>
+                <p><b>Contacta y califica</b><br>Por WhatsApp y ambos se califican</p>
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+        <p>© 2026 Ayni - Red de Empleabilidad para Trabajadores Independientes</p>
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>

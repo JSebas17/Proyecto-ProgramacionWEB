@@ -1,0 +1,432 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f7f7f7;
+    color: #222;
+}
+
+
+/* ENCABEZADO */
+
+.encabezado {
+    background: #eeeeee;
+    padding: 18px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-icono {
+    background: #333;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 20px;
+}
+
+.logo h1 {
+    font-size: 25px;
+}
+
+.logo p {
+    font-size: 11px;
+    color: #666;
+}
+
+
+.estadisticas {
+    display: flex;
+    gap: 30px;
+}
+
+.estadisticas div {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.estadisticas strong {
+    font-size: 22px;
+}
+
+.estadisticas span {
+    font-size: 10px;
+    color: #555;
+}
+
+
+/* MENU */
+
+.menu {
+    background: white;
+    border-bottom: 1px solid #ddd;
+
+    display: flex;
+    align-items: center;
+    padding: 12px 5%;
+    gap: 25px;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #555;
+    font-size: 14px;
+}
+
+.menu .activo {
+    color: #111;
+    font-weight: bold;
+}
+
+.menu-derecha {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.registrarse {
+    background: #333;
+    color: white !important;
+    padding: 9px 15px;
+    border-radius: 7px;
+}
+
+
+/* CONTENIDO */
+
+main {
+    max-width: 1150px;
+    margin: auto;
+    padding: 35px 20px;
+}
+
+.busqueda h2 {
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+.busqueda p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+
+/* FORMULARIO */
+
+.formulario-busqueda {
+    display: flex;
+    gap: 8px;
+}
+
+.formulario-busqueda input,
+.formulario-busqueda select {
+    height: 42px;
+    border: 1px solid #ddd;
+    padding: 0 12px;
+    font-size: 14px;
+}
+
+.formulario-busqueda input {
+    flex: 2;
+}
+
+.formulario-busqueda select {
+    flex: 1;
+}
+
+.formulario-busqueda button {
+    background: #333;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    padding: 0 25px;
+    cursor: pointer;
+}
+
+
+/* CATEGORIAS */
+
+.categorias {
+    display: flex;
+    gap: 8px;
+    margin: 20px 0;
+
+    flex-wrap: wrap;
+}
+
+.categorias button {
+    flex: 1;
+    min-width: 130px;
+
+    height: 70px;
+
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    gap: 6px;
+}
+
+.categorias button:hover {
+    background: #eeeeee;
+}
+
+
+/* FILTROS */
+
+.filtros {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.filtros button {
+    border: 1px solid #ddd;
+    background: white;
+    border-radius: 15px;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+.filtros .activo-filtro {
+    background: #333;
+    color: white;
+}
+
+#cantidadResultados {
+    margin-left: auto;
+    color: #777;
+    font-size: 13px;
+}
+
+
+/* TARJETAS */
+
+.trabajadores {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.tarjeta {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 9px;
+
+    padding: 13px;
+
+    width: calc(33.333% - 8px);
+
+    position: relative;
+}
+
+.foto {
+    width: 35px;
+    height: 35px;
+
+    border-radius: 50%;
+    background: #e5e5e5;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 12px;
+    font-weight: bold;
+
+    margin-bottom: 7px;
+}
+
+.tarjeta h3 {
+    font-size: 15px;
+    margin-bottom: 4px;
+}
+
+.tarjeta p {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 7px;
+}
+
+.verificado {
+    font-size: 10px;
+    background: #f0f0f0;
+    padding: 4px 7px;
+    border-radius: 10px;
+}
+
+.tarjeta strong {
+    font-size: 13px;
+}
+
+.acciones {
+    display: flex;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.acciones button {
+    border: 1px solid #ccc;
+    background: white;
+
+    padding: 6px 8px;
+    border-radius: 5px;
+
+    cursor: pointer;
+    font-size: 11px;
+}
+
+.acciones .whatsapp {
+    background: #333;
+    color: white;
+}
+
+
+/* PASOS */
+
+.pasos {
+    margin-top: 25px;
+    padding: 15px;
+
+    background: #eeeeee;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+}
+
+.pasos div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pasos strong {
+    background: #333;
+    color: white;
+
+    width: 25px;
+    height: 25px;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pasos p {
+    font-size: 11px;
+    color: #666;
+}
+
+
+/* FOOTER */
+
+footer {
+    text-align: center;
+    padding: 20px;
+    color: #777;
+    font-size: 12px;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 800px) {
+
+    .encabezado {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .estadisticas {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .tarjeta {
+        width: calc(50% - 6px);
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .menu {
+        flex-wrap: wrap;
+    }
+
+    .menu-derecha {
+        width: 100%;
+        margin-left: 0;
+        justify-content: flex-end;
+    }
+
+    .busqueda h2 {
+        font-size: 24px;
+    }
+
+    .formulario-busqueda {
+        flex-direction: column;
+    }
+
+    .formulario-busqueda input,
+    .formulario-busqueda select,
+    .formulario-busqueda button {
+        width: 100%;
+        height: 42px;
+    }
+
+    .categorias button {
+        min-width: calc(50% - 5px);
+    }
+
+    .filtros {
+        flex-wrap: wrap;
+    }
+
+    #cantidadResultados {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .tarjeta {
+        width: 100%;
+    }
+
+    .pasos {
+        flex-direction: column;
+    }
+
+}
