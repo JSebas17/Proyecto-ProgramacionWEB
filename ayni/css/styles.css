@@ -1,0 +1,87 @@
+/* ===== Ayni · estilos compartidos =====
+   Paleta: azul noche (primario), cobalto/esmeralda (acentos), WhatsApp verde. */
+:root {
+  --ayni-primary: #0F172A;   /* Azul noche: seriedad y confianza */
+  --ayni-cobalt: #2563EB;    /* Acento: enlaces, chips activos */
+  --ayni-emerald: #059669;   /* Acento: "Identidad verificada" */
+  --ayni-bg: #F1F5F9;        /* Fondo general */
+  --ayni-text: #334155;      /* Texto principal */
+  --ayni-muted: #64748B;     /* Texto secundario */
+  --ayni-border: #E2E8F0;
+  --ayni-wa: #16A34A;        /* WhatsApp */
+  --bs-body-color: var(--ayni-text);
+  --bs-body-bg: var(--ayni-bg);
+  --bs-body-font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+body { background: var(--ayni-bg); color: var(--ayni-text); }
+h1, h2, h3, h4, h5 { color: var(--ayni-primary); font-weight: 700; letter-spacing: -.01em; }
+a { color: var(--ayni-cobalt); }
+:focus-visible { outline: 3px solid var(--ayni-cobalt); outline-offset: 2px; }
+
+/* Navbar */
+.navbar-ayni { background: var(--ayni-primary); }
+.navbar-ayni .nav-link { color: #CBD5E1; }
+.navbar-ayni .nav-link:hover, .navbar-ayni .nav-link.active { color: #fff; }
+.navbar-ayni .nav-link.active { font-weight: 600; }
+.brand-mark { width: 34px; height: 34px; border-radius: .6rem; background: var(--ayni-cobalt);
+  display: inline-grid; place-items: center; color: #fff; }
+
+/* Botones */
+.btn-ayni { background: var(--ayni-primary); color: #fff; border: 0; }
+.btn-ayni:hover, .btn-ayni:focus { background: #1E293B; color: #fff; }
+.btn-whatsapp { background: var(--ayni-wa); color: #fff; border: 0; }
+.btn-whatsapp:hover, .btn-whatsapp:focus { background: #15803D; color: #fff; }
+
+/* Tarjetas y superficies */
+.card-ayni { background: #fff; border: 1px solid var(--ayni-border); border-radius: 1rem; }
+.avatar { width: 52px; height: 52px; border-radius: 50%; background: #E2E8F0; color: var(--ayni-primary);
+  font-weight: 700; display: grid; place-items: center; flex: none; }
+.avatar-lg { width: 88px; height: 88px; font-size: 1.8rem; }
+.badge-verified { background: #D1FAE5; color: #047857; font-weight: 600; }
+.stars { color: #F59E0B; }
+.note { background: var(--ayni-bg); border-radius: .75rem; padding: .85rem 1rem; font-size: .92rem; }
+
+/* Franja de confianza */
+.trust-strip { background: #fff; border-bottom: 1px solid var(--ayni-border); }
+.trust-strip i { color: var(--ayni-emerald); }
+
+/* Buscador y categorías */
+.search-box { border: 1px solid var(--ayni-border); }
+.search-box .form-control, .search-box .form-select { border: 0; box-shadow: none; }
+.cat-btn { background: #fff; border: 1px solid var(--ayni-border); border-radius: 1rem; padding: 1rem .5rem;
+  color: var(--ayni-text); font-weight: 600; width: 100%; transition: border-color .15s, background .15s; }
+.cat-btn i { display: block; font-size: 1.8rem; margin-bottom: .25rem; color: var(--ayni-primary); }
+.cat-btn:hover { border-color: var(--ayni-cobalt); }
+.cat-btn.active { background: var(--ayni-primary); color: #fff; border-color: var(--ayni-primary); }
+.cat-btn.active i { color: #fff; }
+
+/* Chips (filtros y etiquetas de calificación) */
+.chip { border: 1px solid var(--ayni-border); background: #fff; color: var(--ayni-text);
+  border-radius: 999px; padding: .35rem .9rem; font-size: .9rem; cursor: pointer; }
+.chip.active { background: var(--ayni-primary); border-color: var(--ayni-primary); color: #fff; }
+
+/* Pasos */
+.step-num { width: 34px; height: 34px; border-radius: 50%; background: var(--ayni-primary); color: #fff;
+  display: grid; place-items: center; font-weight: 700; flex: none; }
+
+/* Perfil */
+.sticky-side { position: sticky; top: 1rem; }
+.photo-slot { aspect-ratio: 1; background: #E2E8F0; border-radius: .75rem; display: grid; place-items: center;
+  color: #94A3B8; font-size: 1.8rem; }
+
+/* Publicar */
+.upload-slot { aspect-ratio: 1; border: 2px dashed #CBD5E1; border-radius: .75rem; background: #fff; color: #94A3B8;
+  display: grid; place-items: center; font-size: 1.6rem; cursor: pointer; overflow: hidden; }
+.upload-slot img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Calificar */
+.star-btn { background: none; border: 0; font-size: 2.2rem; color: #CBD5E1; padding: 0 .15rem; line-height: 1; }
+.star-btn.on { color: #F59E0B; }
+
+@media (max-width: 575.98px) { .display-title { font-size: 1.75rem; } }
+
+/* Registro: selector de rol (cliente / trabajador) */
+.btn-rol { background: #fff; border: 1px solid var(--ayni-border); border-radius: 1rem; color: var(--ayni-text); }
+.btn-check:checked + .btn-rol { background: var(--ayni-primary); border-color: var(--ayni-primary); color: #fff; }
+.btn-check:checked + .btn-rol small { color: #CBD5E1; }
+.btn-check:focus-visible + .btn-rol { outline: 3px solid var(--ayni-cobalt); outline-offset: 2px; }

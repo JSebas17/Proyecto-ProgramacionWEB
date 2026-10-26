@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Calificar trabajo · Ayni</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+  <!-- Navbar común -->
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-ayni">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-2 fw-bold" href="index.html">
+        <span class="brand-mark"><i class="bi bi-people-fill"></i></span> Ayni
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Abrir menú">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="menu">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Buscar trabajo</a></li>
+          <li class="nav-item"><a class="nav-link" href="publicar.html">Ofrecer mi servicio</a></li>
+        </ul>
+        <div class="d-flex gap-2 py-2 py-lg-0">
+          <a href="login.html" class="btn btn-outline-light btn-sm">Ingresar</a>
+          <a href="registro.html" class="btn btn-light btn-sm fw-semibold">Registrarme</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container py-4 py-lg-5">
+    <div class="row g-4">
+      <div class="col-lg-8">
+        <h1 class="display-title fw-bold">Califica el trabajo</h1>
+        <p class="text-secondary">Pintura de sala y cocina · Rosa Quispe · 28 de septiembre</p>
+
+        <form id="form-calificar" class="card-ayni shadow-sm p-4">
+          <!-- Estrellas interactivas (1 a 5) -->
+          <fieldset class="mb-4">
+            <legend class="h6">Tu calificación</legend>
+            <div id="estrellas" role="radiogroup" aria-label="Calificación de 1 a 5 estrellas">
+              <button type="button" class="star-btn" data-v="1" aria-label="1 estrella">★</button>
+              <button type="button" class="star-btn" data-v="2" aria-label="2 estrellas">★</button>
+              <button type="button" class="star-btn" data-v="3" aria-label="3 estrellas">★</button>
+              <button type="button" class="star-btn" data-v="4" aria-label="4 estrellas">★</button>
+              <button type="button" class="star-btn" data-v="5" aria-label="5 estrellas">★</button>
+            </div>
+            <small class="text-secondary" id="estrellas-txt">Elige de 1 a 5 estrellas.</small>
+          </fieldset>
+
+          <!-- Chips seleccionables -->
+          <fieldset class="mb-4">
+            <legend class="h6">¿Qué tal fue?</legend>
+            <div class="d-flex flex-wrap gap-2" id="chips">
+              <button type="button" class="chip">Puntual</button>
+              <button type="button" class="chip">Pagó lo acordado</button>
+              <button type="button" class="chip">Buen trato</button>
+            </div>
+          </fieldset>
+
+          <label class="form-label fw-semibold" for="comentario">Comentario (opcional)</label>
+          <textarea id="comentario" class="form-control mb-3" rows="4" placeholder="Excelente acabado, dejó todo limpio…"></textarea>
+
+          <button class="btn btn-ayni px-4" type="submit">Enviar calificación</button>
+          <div id="msg" class="alert mt-3 mb-0 d-none" role="status"></div>
+        </form>
+      </div>
+
+      <aside class="col-lg-4">
+        <div class="card-ayni shadow-sm p-4">
+          <h2 class="h5">Calificación mutua</h2>
+          <p class="text-secondary">Trabajador y cliente se califican entre sí. Así los dos construyen un historial confiable.</p>
+          <p class="note mb-0">Tu reseña aparece en el perfil una vez que ambos califican.</p>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/calificar.js"></script>
+</body>
+</html>

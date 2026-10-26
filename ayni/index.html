@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Buscar trabajo · Ayni</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+  <!-- Navbar común -->
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-ayni">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-2 fw-bold" href="index.html">
+        <span class="brand-mark"><i class="bi bi-people-fill"></i></span> Ayni
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Abrir menú">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="menu">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link active" href="index.html">Buscar trabajo</a></li>
+          <li class="nav-item"><a class="nav-link" href="publicar.html">Ofrecer mi servicio</a></li>
+        </ul>
+        <div class="d-flex gap-2 py-2 py-lg-0">
+          <a href="login.html" class="btn btn-outline-light btn-sm">Ingresar</a>
+          <a href="registro.html" class="btn btn-light btn-sm fw-semibold">Registrarme</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Franja de confianza -->
+  <div class="trust-strip">
+    <div class="container py-2 d-flex flex-wrap justify-content-center justify-content-md-end gap-3 small">
+      <span><i class="bi bi-graph-up-arrow"></i> 80% informalidad laboral en Cusco</span>
+      <span><i class="bi bi-patch-check-fill"></i> Identidad verificada</span>
+      <span><i class="bi bi-star-fill"></i> Calificación mutua</span>
+    </div>
+  </div>
+
+  <main class="container py-4 py-lg-5">
+    <!-- Título y buscador -->
+    <header class="mb-4">
+      <h1 class="display-title fw-bold">¿Qué trabajo necesitas en tu casa o negocio?</h1>
+      <p class="text-secondary mb-0">Elige un oficio, ve quién está verificado y contáctalo directo.</p>
+    </header>
+
+    <form class="card-ayni search-box shadow-sm p-2 mb-4" id="search-form" role="search">
+      <div class="row g-2 align-items-center">
+        <div class="col-12 col-md-6">
+          <label class="visually-hidden" for="q">Oficio</label>
+          <input id="q" class="form-control" type="search" placeholder="Ej. arreglar un tablero">
+        </div>
+        <div class="col-7 col-md-4">
+          <label class="visually-hidden" for="distrito">Distrito</label>
+          <select id="distrito" class="form-select">
+            <option value="">Todos los distritos</option>
+            <option>San Sebastián</option><option>Santiago</option>
+            <option>San Jerónimo</option><option>Wanchaq</option>
+          </select>
+        </div>
+        <div class="col-5 col-md-2 d-grid"><button class="btn btn-ayni" type="submit">Buscar</button></div>
+      </div>
+    </form>
+
+    <!-- Categorías de oficios (filtran al hacer clic) -->
+    <div class="row g-2 g-md-3 row-cols-2 row-cols-sm-3 row-cols-lg-6 mb-4" id="categorias">
+      <div class="col"><button type="button" class="cat-btn" data-oficio="Electricista"><i class="bi bi-lightning-charge-fill"></i>Electricista</button></div>
+      <div class="col"><button type="button" class="cat-btn" data-oficio="Pintura"><i class="bi bi-palette-fill"></i>Pintura</button></div>
+      <div class="col"><button type="button" class="cat-btn" data-oficio="Gasfitería"><i class="bi bi-droplet-fill"></i>Gasfitería</button></div>
+      <div class="col"><button type="button" class="cat-btn" data-oficio="Carpintería"><i class="bi bi-hammer"></i>Carpintería</button></div>
+      <div class="col"><button type="button" class="cat-btn" data-oficio="Hotelería"><i class="bi bi-building"></i>Hotelería</button></div>
+      <div class="col"><button type="button" class="cat-btn" data-oficio="Limpieza"><i class="bi bi-stars"></i>Limpieza</button></div>
+    </div>
+
+    <!-- Filtros rápidos -->
+    <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
+      <button type="button" class="chip active" id="f-verif"><i class="bi bi-check2"></i> Solo verificados</button>
+      <button type="button" class="chip" id="f-stars"><i class="bi bi-star-fill stars"></i> 4 o más</button>
+      <span class="ms-auto small text-secondary" id="contador"></span>
+    </div>
+
+    <!-- Grid de tarjetas -->
+    <section class="row g-3 row-cols-1 row-cols-sm-2 row-cols-xl-4" id="resultados" aria-live="polite"></section>
+
+    <!-- Proceso en 3 pasos -->
+    <section class="card-ayni shadow-sm p-4 mt-5">
+      <div class="row g-4">
+        <div class="col-md-4 d-flex gap-3"><span class="step-num">1</span><div><strong>Busca</strong><div class="small text-secondary">Por oficio y distrito</div></div></div>
+        <div class="col-md-4 d-flex gap-3"><span class="step-num">2</span><div><strong>Revisa</strong><div class="small text-secondary">Identidad verificada y reseñas</div></div></div>
+        <div class="col-md-4 d-flex gap-3"><span class="step-num">3</span><div><strong>Contacta y califica</strong><div class="small text-secondary">Por WhatsApp, y ambos se califican</div></div></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
