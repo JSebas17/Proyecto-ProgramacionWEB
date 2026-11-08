@@ -42,10 +42,18 @@ class AuthController extends Controller
         ];
 
         if (Auth::attempt($credenciales, $request->boolean('recordar'))) {
-            // Regenera el ID de sesión (evita fijación de sesión)
-            $request->session()->regenerate();
-            return redirect()->intended(route('home'));
-        }
+    // Regenera el ID de sesión (evita fijación de sesión)
+    $request->session()->regenerate();
+
+    // Cada rol aterriza en su sección; evita rutas a las que no tiene acceso
+    $destino = match (Auth::user()->rol) {
+        'admin'      => route('admin.panel'),
+        'trabajador' => route('servicios.index'),
+        default      => route('home'),
+    };
+
+    return redirect()->to($destino);
+}
 
         return back()
             ->withErrors(['email' => 'Correo o contraseña incorrectos.'])

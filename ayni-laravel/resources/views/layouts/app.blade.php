@@ -32,12 +32,20 @@
           <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">Buscar trabajo</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('publicar') ? 'active' : '' }}" href="{{ route('publicar') }}">Ofrecer mi servicio</a>
-          </li>
+          @if (auth()->guest() || auth()->user()->rol === 'trabajador')
+  <li class="nav-item">
+    <a class="nav-link {{ request()->routeIs('publicar') ? 'active' : '' }}" href="{{ route('publicar') }}">Ofrecer mi servicio</a>
+  </li>
+@endif
           @if (auth()->user()?->rol === 'trabajador')
   <li class="nav-item">
     <a class="nav-link {{ request()->routeIs('servicios.*') ? 'active' : '' }}" href="{{ route('servicios.index') }}">Mis servicios</a>
+  </li>
+@endif
+
+@if (auth()->user()?->rol === 'admin')
+  <li class="nav-item">
+    <a class="nav-link {{ request()->routeIs('admin.*') ? 'active' : '' }}" href="{{ route('admin.panel') }}">Administración</a>
   </li>
 @endif
         </ul>
