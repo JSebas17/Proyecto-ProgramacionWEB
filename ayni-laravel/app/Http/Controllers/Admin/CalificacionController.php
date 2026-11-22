@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Calificacion;
+use App\Support\Auditoria;
 use Illuminate\Support\Facades\Cache;
 
 /**
@@ -24,8 +25,10 @@ class CalificacionController extends Controller
     /** Elimina una calificación moderada. */
     public function destroy(Calificacion $calificacion)
     {
+        $id = $calificacion->id;
         $calificacion->delete();
         Cache::forget('admin.metricas');
+        Auditoria::registrar('admin.calificacion_eliminada', ['calificacion_id' => $id]);
 
         return back()->with('mensaje', 'Calificación eliminada.');
     }

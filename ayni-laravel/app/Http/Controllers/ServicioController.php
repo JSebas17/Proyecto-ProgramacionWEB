@@ -6,16 +6,21 @@ use App\Models\Distrito;
 use App\Models\Oficio;
 use App\Models\PerfilTrabajador;
 use App\Models\Servicio;
+use App\Support\Imagenes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\ValidationException;
+use Throwable;
 
 /**
- * CRUD de servicios del trabajador (reemplaza a publicar.php).
+ * CRUD de servicios del trabajador.
  * Todas las rutas exigen sesión y rol "trabajador" (ver routes/web.php).
  */
 class ServicioController extends Controller
 {
+    /** Máximo de fotos de trabajos por servicio. */
+    private const MAX_FOTOS = 4;
+
     /** Lista los servicios del trabajador con su promedio de calificaciones. */
     public function index()
     {
@@ -40,7 +45,7 @@ class ServicioController extends Controller
     {
         $this->guardar($request);
 
-        return redirect()->route('servicios.index')->with('mensaje', '¡Servicio publicado!');
+        return redirect()->route('servicios.index')->with('mensaje', '¡Servicio publicado! Ya aparece en las búsquedas.');
     }
 
     /** Formulario de edición (solo el dueño). */
@@ -78,8 +83,8 @@ class ServicioController extends Controller
     private function catalogos(): array
     {
         return [
-            'oficios'   => Oficio::orderBy('nombre')->get(),
-            'distritos' => Distrito::orderBy('nombre')->get(),
+            'oficios'   => Oficio::catalogo(),
+            'distritos' => Distrito::catalogo(),
         ];
     }
 
@@ -92,7 +97,9 @@ class ServicioController extends Controller
     /**
      * Valida el formulario y guarda servicio + perfil dentro de una transacción
      * (si algo falla, no queda nada a medias).
-     * Mismas reglas del prototipo: tarifa > 0, hasta 4 fotos JPG/PNG/WEBP de 3 MB.
+     *
+     * Fotos: al editar se puede quitar cada foto actual (casilla "quitar[]") y agregar
+     * nuevas; entre conservadas y nuevas el máximo es 4. Cada foto nueva se comprime.
      */
     private function guardar(Request $request, ?Servicio $servicio = null): Servicio
     {
@@ -101,51 +108,71 @@ class ServicioController extends Controller
             'distrito_id' => ['required', 'exists:distritos,id'],
             'tarifa'      => ['required', 'integer', 'min:1'],
             'descripcion' => ['nullable', 'string', 'max:1000'],
-            'fotos'       => ['nullable', 'array', 'max:4'],
+            'fotos'       => ['nullable', 'array'],
             'fotos.*'     => ['image', 'mimes:jpg,jpeg,png,webp', 'max:3072'], // KB
+            'quitar'      => ['nullable', 'array'],
+            'quitar.*'    => ['string'],
         ], [
             'oficio_id.required'   => 'Elige un oficio.',
             'distrito_id.required' => 'Elige un distrito.',
             'tarifa.required'      => 'Ingresa una tarifa mayor a 0.',
             'tarifa.integer'       => 'Ingresa una tarifa mayor a 0.',
             'tarifa.min'           => 'Ingresa una tarifa mayor a 0.',
-            'fotos.max'            => 'Máximo 4 fotos.',
+            'descripcion.max'      => 'La descripción admite máximo 1000 caracteres.',
             'fotos.*.image'        => 'Cada archivo debe ser una imagen.',
             'fotos.*.mimes'        => 'Solo JPG, PNG o WEBP.',
             'fotos.*.max'          => 'Cada foto pesa máximo 3 MB.',
         ]);
 
-        return DB::transaction(function () use ($request, $datos, $servicio) {
-            $usuario = $request->user();
+        // Fotos que ya tenía, menos las que marcó para quitar (solo se aceptan rutas propias)
+        $actuales    = $servicio?->fotos ?? [];
+        $paraQuitar  = array_values(array_intersect($datos['quitar'] ?? [], $actuales));
+        $conservadas = array_values(array_diff($actuales, $paraQuitar));
+        $subidas     = $request->file('fotos', []);
 
-            // El oficio y la tarifa viven en el perfil 1:1 del trabajador
-            PerfilTrabajador::updateOrCreate(['user_id' => $usuario->id], [
-                'oficio_id'          => $datos['oficio_id'],
-                'descripcion'        => $datos['descripcion'] ?? null,
-                'tarifa_referencial' => $datos['tarifa'],
+        if (count($conservadas) + count($subidas) > self::MAX_FOTOS) {
+            throw ValidationException::withMessages([
+                'fotos' => 'Máximo ' . self::MAX_FOTOS . ' fotos en total. Quita alguna actual o sube menos.',
             ]);
+        }
 
-            $campos = [
-                'trabajador_id' => $usuario->id,
-                'distrito_id'   => $datos['distrito_id'],
-                'titulo'        => 'Servicio de ' . Oficio::find($datos['oficio_id'])->nombre,
-                'descripcion'   => $datos['descripcion'] ?? '',
-                'precio_desde'  => $datos['tarifa'],
-            ];
+        $nuevas = []; // rutas recién guardadas (para limpiarlas si algo falla)
 
-            // Fotos nuevas: se guardan en el disco "public" con nombre aleatorio
-            if ($request->hasFile('fotos')) {
-                if ($servicio) {
-                    Storage::disk('public')->delete($servicio->fotos ?? []); // reemplaza las anteriores
+        try {
+            $guardado = DB::transaction(function () use ($request, $datos, $servicio, $conservadas, $subidas, &$nuevas) {
+                $usuario = $request->user();
+
+                // El oficio y la tarifa viven en el perfil 1:1 del trabajador
+                PerfilTrabajador::updateOrCreate(['user_id' => $usuario->id], [
+                    'oficio_id'          => $datos['oficio_id'],
+                    'descripcion'        => $datos['descripcion'] ?? null,
+                    'tarifa_referencial' => $datos['tarifa'],
+                ]);
+
+                foreach ($subidas as $archivo) {
+                    $nuevas[] = Imagenes::trabajo($archivo);
                 }
-                $campos['fotos'] = collect($request->file('fotos'))
-                    ->map(fn ($f) => $f->store('uploads/servicios', 'public'))
-                    ->all();
-            }
 
-            return $servicio
-                ? tap($servicio)->update($campos)
-                : Servicio::create($campos);
-        });
+                $campos = [
+                    'trabajador_id' => $usuario->id,
+                    'distrito_id'   => $datos['distrito_id'],
+                    'titulo'        => 'Servicio de ' . Oficio::findOrFail($datos['oficio_id'])->nombre,
+                    'descripcion'   => $datos['descripcion'] ?? '',
+                    'precio_desde'  => $datos['tarifa'],
+                    'fotos'         => array_merge($conservadas, $nuevas),
+                ];
+
+                return $servicio
+                    ? tap($servicio)->update($campos)
+                    : Servicio::create($campos);
+            });
+        } catch (Throwable $e) {
+            Imagenes::borrar($nuevas); // no dejar archivos huérfanos
+            throw $e;
+        }
+
+        Imagenes::borrar($paraQuitar); // recién ahora se borran del disco las fotos quitadas
+
+        return $guardado;
     }
 }

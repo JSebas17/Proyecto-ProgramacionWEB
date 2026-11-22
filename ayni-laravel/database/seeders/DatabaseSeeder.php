@@ -15,7 +15,11 @@ class DatabaseSeeder extends Seeder
             DistritoSeeder::class,   // 1. catálogos
             OficioSeeder::class,
             UsuarioSeeder::class,    // 2. admin y cliente (autores de reseñas)
-            TrabajadorSeeder::class, // 3. trabajadores + perfiles + servicios + calificaciones
         ]);
+
+        // Los trabajadores de ejemplo usan contraseñas públicas: nunca en producción (A07/A02)
+        if (! app()->isProduction()) {
+            $this->call(TrabajadorSeeder::class); // 3. trabajadores + perfiles + servicios + calificaciones
+        }
     }
 }

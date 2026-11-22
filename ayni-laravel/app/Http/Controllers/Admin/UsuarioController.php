@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Support\Auditoria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
@@ -32,6 +33,7 @@ class UsuarioController extends Controller
     {
         $usuario->update(['verificado' => ! $usuario->verificado]);
         Cache::forget('admin.metricas');
+        Auditoria::registrar('admin.verificacion', ['objetivo_id' => $usuario->id, 'verificado' => $usuario->verificado]);
 
         return back()->with('mensaje', $usuario->verificado
             ? "Identidad de {$usuario->nombre_completo} verificada."
@@ -45,6 +47,7 @@ class UsuarioController extends Controller
 
         $usuario->update(['activo' => ! $usuario->activo]);
         Cache::forget('admin.metricas');
+        Auditoria::registrar('admin.cuenta_' . ($usuario->activo ? 'activada' : 'desactivada'), ['objetivo_id' => $usuario->id]);
 
         return back()->with('mensaje', $usuario->activo ? 'Cuenta activada.' : 'Cuenta desactivada.');
     }

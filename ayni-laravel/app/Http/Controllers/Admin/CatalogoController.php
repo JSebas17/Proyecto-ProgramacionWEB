@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Distrito;
 use App\Models\Oficio;
+use App\Support\Auditoria;
 use Illuminate\Http\Request;
 
 /**
@@ -30,7 +31,8 @@ class CatalogoController extends Controller
             'descripcion' => ['nullable', 'string', 'max:255'],
         ], ['nombre.unique' => 'Ese oficio ya existe.']);
 
-        Oficio::create($datos);
+        $nuevo = Oficio::create($datos);
+        Auditoria::registrar('admin.oficio_agregado', ['oficio_id' => $nuevo->id]);
         return back()->with('mensaje', 'Oficio agregado.');
     }
 
@@ -41,6 +43,7 @@ class CatalogoController extends Controller
             return back()->with('error', 'No se puede eliminar: hay trabajadores con este oficio.');
         }
         $oficio->delete();
+        Auditoria::registrar('admin.oficio_eliminado', ['oficio_id' => $oficio->id]);
         return back()->with('mensaje', 'Oficio eliminado.');
     }
 
@@ -52,7 +55,8 @@ class CatalogoController extends Controller
             'provincia' => ['required', 'string', 'max:80'],
         ], ['nombre.unique' => 'Ese distrito ya existe.']);
 
-        Distrito::create($datos);
+        $nuevo = Distrito::create($datos);
+        Auditoria::registrar('admin.distrito_agregado', ['distrito_id' => $nuevo->id]);
         return back()->with('mensaje', 'Distrito agregado.');
     }
 
@@ -63,6 +67,7 @@ class CatalogoController extends Controller
             return back()->with('error', 'No se puede eliminar: el distrito está en uso.');
         }
         $distrito->delete();
+        Auditoria::registrar('admin.distrito_eliminado', ['distrito_id' => $distrito->id]);
         return back()->with('mensaje', 'Distrito eliminado.');
     }
 }

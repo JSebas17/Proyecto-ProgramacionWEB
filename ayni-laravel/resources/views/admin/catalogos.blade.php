@@ -4,13 +4,13 @@
 
 @section('contenido')
 <main class="container py-4 py-lg-5">
-  <h1 class="display-title fw-bold mb-3">Administración</h1>
+  <h1 class="display-title mb-3">Administración</h1>
   @include('admin._tabs')
 
   <div class="row g-4">
     {{-- Oficios --}}
     <div class="col-lg-6">
-      <div class="card-ayni shadow-sm p-4">
+      <div class="card-ayni p-4">
         <h2 class="h5">Oficios</h2>
         <form method="post" action="{{ route('admin.catalogos.oficios.store') }}" class="row g-2 mb-3">
           @csrf
@@ -35,7 +35,7 @@
 
     {{-- Distritos --}}
     <div class="col-lg-6">
-      <div class="card-ayni shadow-sm p-4">
+      <div class="card-ayni p-4">
         <h2 class="h5">Distritos</h2>
         <form method="post" action="{{ route('admin.catalogos.distritos.store') }}" class="row g-2 mb-3">
           @csrf
@@ -59,10 +59,3 @@
   </div>
 </main>
 @endsection
-
-@push('scripts')
-  <script>
-    document.querySelectorAll('form[data-confirmar]').forEach(f =>
-      f.addEventListener('submit', e => { if (!confirm(f.dataset.confirmar)) e.preventDefault(); }));
-  </script>
-@endpush

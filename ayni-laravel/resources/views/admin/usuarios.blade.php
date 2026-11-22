@@ -12,15 +12,27 @@
     <a href="{{ route('admin.usuarios', ['estado' => 'pendientes']) }}" class="btn btn-outline-secondary btn-sm">Pendientes de verificar</a>
   </div>
 
-  <div class="card-ayni shadow-sm p-3 table-responsive">
+  <div class="card-ayni p-3 table-responsive">
     <table class="table align-middle mb-0">
       <thead><tr><th>Nombre</th><th>Rol</th><th>DNI</th><th>Distrito</th><th>Verificado</th><th>Cuenta</th><th></th></tr></thead>
       <tbody>
         @forelse ($usuarios as $u)
           <tr>
             <td>
-              {{ $u->nombre_completo }}
-              <div class="small text-secondary">{{ $u->email }}</div>
+              <div class="d-flex align-items-center gap-2">
+                <x-avatar :user="$u" size="sm" />
+                <div>
+                  @if ($u->rol === 'trabajador')
+                    <a href="{{ route('trabajadores.show', $u) }}">{{ $u->nombre_completo }}</a>
+                  @else
+                    {{ $u->nombre_completo }}
+                  @endif
+                  <div class="small text-secondary">{{ $u->email }}</div>
+                  @if ($u->cv)
+                    <a class="small" href="{{ route('cv.descargar', $u) }}" target="_blank" rel="noopener"><i class="bi bi-file-earmark-pdf" aria-hidden="true"></i> Ver CV</a>
+                  @endif
+                </div>
+              </div>
             </td>
             <td>{{ ucfirst($u->rol) }}{{ $u->perfilTrabajador?->oficio ? ' · ' . $u->perfilTrabajador->oficio->nombre : '' }}</td>
             <td>{{ $u->dni ?? '—' }}</td>
@@ -54,11 +66,3 @@
   <div class="mt-3">{{ $usuarios->links() }}</div>
 </main>
 @endsection
-
-@push('scripts')
-  <script>
-    // Confirmación antes de enviar formularios marcados con data-confirmar
-    document.querySelectorAll('form[data-confirmar]').forEach(f =>
-      f.addEventListener('submit', e => { if (!confirm(f.dataset.confirmar)) e.preventDefault(); }));
-  </script>
-@endpush

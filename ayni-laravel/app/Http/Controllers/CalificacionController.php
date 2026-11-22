@@ -21,7 +21,17 @@ class CalificacionController extends Controller
             return $bloqueo;
         }
 
-        $servicios = $trabajador->servicios()->activos()->get();
+        // Solo se ofrecen los servicios que este usuario aún no calificó
+        // (with('distrito') evita una consulta por cada opción del selector)
+        $servicios = $trabajador->servicios()->activos()
+            ->whereDoesntHave('calificaciones', fn ($q) => $q->where('autor_id', auth()->id()))
+            ->with('distrito')
+            ->get();
+
+        if ($servicios->isEmpty()) {
+            return redirect()->route('trabajadores.show', $trabajador)
+                ->with('error', 'Ya calificaste todos los servicios de este trabajador.');
+        }
 
         return view('calificaciones.create', compact('trabajador', 'servicios'));
     }

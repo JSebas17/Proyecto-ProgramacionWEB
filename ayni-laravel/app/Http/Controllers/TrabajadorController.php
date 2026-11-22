@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Calificacion;
 use App\Models\User;
 
 /**
@@ -23,16 +24,19 @@ class TrabajadorController extends Controller
             ->loadAvg('calificacionesRecibidas', 'puntuacion')
             ->loadCount('calificacionesRecibidas');
 
-        // Últimas 20 reseñas. La columna se califica porque la relación hace JOIN con servicios.
+        // Últimas 10 reseñas. La columna se califica porque la relación hace JOIN con servicios.
         $resenas = $trabajador->calificacionesRecibidas()
             ->with('autor.distrito')
             ->latest('calificaciones.created_at')
-            ->limit(20)
+            ->limit(10)
             ->get();
 
         // Fotos de todos sus servicios activos (máximo 8)
         $fotos = $trabajador->servicios->flatMap(fn ($s) => $s->fotos ?? [])->take(8);
 
-        return view('trabajadores.show', compact('trabajador', 'resenas', 'fotos'));
+        // Gráfica: cuántas reseñas tiene cada puntaje (una sola consulta)
+        $distribucion = Calificacion::distribucion($trabajador->id);
+
+        return view('trabajadores.show', compact('trabajador', 'resenas', 'fotos', 'distribucion'));
     }
 }

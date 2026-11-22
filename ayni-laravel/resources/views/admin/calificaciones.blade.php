@@ -4,10 +4,10 @@
 
 @section('contenido')
 <main class="container py-4 py-lg-5">
-  <h1 class="display-title fw-bold mb-3">Administración</h1>
+  <h1 class="display-title mb-3">Administración</h1>
   @include('admin._tabs')
 
-  <div class="card-ayni shadow-sm p-3 table-responsive">
+  <div class="card-ayni p-3 table-responsive">
     <table class="table align-middle mb-0">
       <thead><tr><th>Autor</th><th>Trabajador</th><th>Puntos</th><th>Comentario</th><th>Fecha</th><th></th></tr></thead>
       <tbody>
@@ -34,10 +34,3 @@
   <div class="mt-3">{{ $calificaciones->links() }}</div>
 </main>
 @endsection
-
-@push('scripts')
-  <script>
-    document.querySelectorAll('form[data-confirmar]').forEach(f =>
-      f.addEventListener('submit', e => { if (!confirm(f.dataset.confirmar)) e.preventDefault(); }));
-  </script>
-@endpush

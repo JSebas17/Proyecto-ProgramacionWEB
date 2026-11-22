@@ -15,15 +15,28 @@ class UsuarioSeeder extends Seeder
 {
     public function run(): void
     {
+        // A07/A02: en producción NO se crean cuentas con la contraseña pública "password123".
+        // El admin solo se crea si defines SEED_ADMIN_PASSWORD (y no se crea el cliente de prueba).
+        $produccion = app()->isProduction();
+        $claveAdmin = $produccion ? env('SEED_ADMIN_PASSWORD') : 'password123';
+
+        if ($produccion && (! $claveAdmin || strlen($claveAdmin) < 12)) {
+            throw new \RuntimeException('Producción: define SEED_ADMIN_PASSWORD (mínimo 12 caracteres) antes de ejecutar los seeders.');
+        }
+
         // Administrador (verifica identidades y modera)
         User::updateOrCreate(['email' => 'admin@ayni.test'], [
             'name'       => 'Administrador',
             'apellidos'  => 'Ayni',
-            'password'   => 'password123', // el cast "hashed" la encripta
+            'password'   => $claveAdmin, // el cast "hashed" la encripta
             'rol'        => 'admin',
             'verificado' => true,
             'distrito_id' => Distrito::where('nombre', 'Cusco')->value('id'),
         ]);
+
+        if ($produccion) {
+            return;
+        }
 
         // Cliente de prueba con su perfil 1:1
         $cliente = User::updateOrCreate(['email' => 'cliente@ayni.test'], [

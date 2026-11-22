@@ -15,6 +15,12 @@ return Application::configure(basePath: dirname(__DIR__))
     $middleware->redirectUsersTo('/');
     // Alias para usar ->middleware('rol:trabajador')
     $middleware->alias(['rol' => \App\Http\Middleware\RolMiddleware::class]);
+
+    // Seguridad en TODAS las rutas web: cabeceras (A02/A04) y cierre de sesión de cuentas desactivadas (A01)
+    $middleware->web(append: [
+        \App\Http\Middleware\CabeceraSeguridad::class,
+        \App\Http\Middleware\CuentaActiva::class,
+    ]);
 })
 
     ->withExceptions(function (Exceptions $exceptions): void {

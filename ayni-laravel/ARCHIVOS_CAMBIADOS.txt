@@ -1,0 +1,36 @@
+ARCHIVOS NUEVOS O CAMBIADOS respecto a tu ayni-laravel-mejorado.zip
+(copia estos archivos, conservando sus carpetas)
+
+CAMBIADO  CAMBIOS.md
+CAMBIADO  app/Http/Controllers/Admin/PanelController.php
+CAMBIADO  app/Http/Controllers/AuthController.php
+CAMBIADO  app/Http/Controllers/CalificacionController.php
+CAMBIADO  app/Http/Controllers/HomeController.php
+CAMBIADO  app/Http/Controllers/PerfilController.php
+CAMBIADO  app/Http/Controllers/ServicioController.php
+CAMBIADO  app/Http/Controllers/TrabajadorController.php
+CAMBIADO  app/Models/Calificacion.php
+CAMBIADO  app/Models/Distrito.php
+CAMBIADO  app/Models/Oficio.php
+CAMBIADO  app/Models/Servicio.php
+CAMBIADO  app/Models/User.php
+CAMBIADO  public/css/styles.css
+CAMBIADO  public/favicon.svg
+CAMBIADO  public/js/app.js
+CAMBIADO  resources/views/admin/_tabs.blade.php
+CAMBIADO  resources/views/admin/panel.blade.php
+CAMBIADO  resources/views/calificaciones/create.blade.php
+CAMBIADO  resources/views/home.blade.php
+CAMBIADO  resources/views/layouts/app.blade.php
+CAMBIADO  resources/views/perfil/edit.blade.php
+CAMBIADO  resources/views/servicios/index.blade.php
+CAMBIADO  resources/views/trabajadores/show.blade.php
+CAMBIADO  routes/web.php
+NUEVO    ARCHIVOS_CAMBIADOS.txt
+NUEVO    CAMBIOS_FASES_6_9.md
+NUEVO    database/migrations/2026_11_16_000001_add_indices_de_optimizacion.php
+NUEVO    resources/views/components/grafica-barras.blade.php
+NUEVO    resources/views/components/migas.blade.php
+NUEVO    tests/Feature/CalificacionesWhatsappTest.php
+NUEVO    tests/Feature/GraficasNavegacionTest.php
+NUEVO    tests/Feature/OptimizacionTest.php
